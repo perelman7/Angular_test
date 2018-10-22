@@ -1,0 +1,88 @@
+﻿<h1>Список пользователей</h1>
+<div class="row">
+    <div class="col-sm-9">
+        <div class="row">
+            <div class="col-sm-4">
+                <button class="btn btn-default" (click)="addUser()">Добавить</button>
+            </div>
+            <div class="col-sm-4">
+                <input [(ngModel)]="nameValue" name="nameValue" placeholder="поиск по имени" />
+                <button class="btn btn-default" (click)="filterUser(nameValue)">Поиск</button>
+                <button class="btn btn-default" (click)="filterUser()">Все значения</button>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-default" (click)="sortByName()">Сортировать по имени</button>
+                <button class="btn btn-default" (click)="sortByAge()">Сортировать по возрасту</button>
+            </div>
+        </div>
+        
+        <table *ngIf="tableMode; else create" class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>Имя</td>
+                    <td>Возрост</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody id="tbBody">
+                <tr *ngFor="let u of usersForTable">
+                    <ng-template [ngIf]="user?.id != u.id" [ngIfElse]="edit">
+                        <td class="col-sm-5">{{u?.name}}</td>
+                        <td class="col-sm-2">{{u?.age}}</td>
+                        <td class="col-sm-5">
+                            <button class="btn btn-sm btn-primary" (click)="editUser(u)">Изменить</button>
+                            <button class="btn btn-sm btn-danger" (click)="deleteUser(u)">Удалить</button>
+                        </td>
+                    </ng-template>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <button class="btn btn-default" (click)="firstPage()">Первая</button>
+                        <button *ngIf="currentPage!=1" class="btn btn-default" (click)="previosePage()">
+                            <div class="glyphicon glyphicon-chevron-left"></div> {{(currentPage-1)}}
+                        </button>
+                        <button class="btn btn-default">{{currentPage}}</button>
+                        <button *ngIf="currentPage!=pages" class="btn btn-default" (click)="nextPage()">
+                            {{(currentPage+1)}}<div class="glyphicon glyphicon-chevron-right"></div>
+                        </button>
+                        <button class="btn btn-default" (click)="lastPage()">Последняя</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!--шаблон для редактирования-->
+        <ng-template #edit>
+            <td>
+                <input type="text" [(ngModel)]="user.name" class="form-control" />
+            </td>
+            <td>
+                <input type="text" [(ngModel)]="user.age" class="form-control" />
+            </td>
+            <td>
+                <input type="button" value="Сохранить" (click)="save()" class="btn btn-sm btn-success" />
+                <input type="button" value="Отмена" (click)="cansel()" class="btn btn-sm btn-warning" />
+            </td>
+        </ng-template>
+
+        <!--шаблон для добавления-->
+        <ng-template #create>
+            <div class="form-group">
+                <label>Имя</label>
+                <input type="text" [(ngModel)]="user.name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Возрост</label>
+                <input type="text" [(ngModel)]="user.age" class="form-control" />
+            </div>
+            <div>
+                <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+                <input type="button" value="Отмена" (click)="cansel()" class="btn btn-warning" />
+            </div>
+        </ng-template>
+    </div>
+</div>
+
+

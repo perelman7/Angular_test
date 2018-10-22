@@ -1,0 +1,8 @@
+﻿<h2>About page</h2>
+
+<label class="container" *ngFor="let u of users">
+    <input type="checkbox" data-md-icheck (change)="toggleVisibility(u)" />{{u.name}}
+</label>
+
+
+<div> {{checkedUsers}}</div>

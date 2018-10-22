@@ -1,0 +1,132 @@
+﻿<h1>Список пользователей</h1>
+<div class="row">
+    <div class="col-sm-9">
+        <div class="form-group">
+            <div class="col-sm-3">
+                <button class="btn btn-default" (click)="addPhone()">Добавить</button>
+            </div>
+        </div>
+        <table *ngIf="tableMode; else create" class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>Компания</td>
+                    <td>Название</td>
+                    <td>Цена</td>
+                    <td>Год выпуска</td>
+                    <td>Цвет</td>
+                    <td>Объем памяти</td>
+                    <td>Камера</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody id="tbBody">
+                <tr *ngFor="let p of phoneForTable">
+                    <ng-template [ngIf]="phone?.id != p.id" [ngIfElse]="edit">
+                        <td>{{p?.company}}</td>
+                        <td>{{p?.name}}</td>
+                        <td>{{p?.price}}</td>
+                        <td>{{p?.yearRelease}}</td>
+                        <td>{{p?.colorPhone}}</td>
+                        <td>{{p?.valueMemory}}</td>
+                        <td>{{p?.cameraPx}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" (click)="editPhone(p)">Изменить</button>
+                            <button class="btn btn-sm btn-danger" (click)="deletePhone(p)">Удалить</button>
+                        </td>
+                    </ng-template>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <button class="btn btn-default" (click)="firstPage()">Первая</button>
+                        <button *ngIf="currentPage!=1" class="btn btn-default" (click)="previosePage()">
+                            <div class="glyphicon glyphicon-chevron-left"></div> {{(currentPage-1)}}
+                        </button>
+                        <button class="btn btn-default">{{currentPage}}</button>
+                        <button *ngIf="currentPage!=pages" class="btn btn-default" (click)="nextPage()">
+                            {{(currentPage+1)}}<div class="glyphicon glyphicon-chevron-right"></div>
+                        </button>
+                        <button class="btn btn-default" (click)="lastPage()">Последняя</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!--шаблон для редактирования-->
+        <ng-template #edit>
+                <td>
+                    <input type="text" [(ngModel)]="phone.company" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="phone.name" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="phone.price" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="phone.yearRelease" class="form-control" />
+                </td>
+                <td>
+                    <label *ngFor="let col of characts">
+                        <input type="checkbox" data-md-icheck (change)="toggleVisibilityColors(col)" />{{col.color}}
+                    </label>
+                </td>
+                <td class="col-sm-2">
+                    <select [(ngModel)]="phone.valueMemory" class="form-control">
+                        <option *ngFor="let mam of characts" [ngValue]="mam.mamory">{{mam.mamory}}</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="phone.cameraPx" class="form-control" />
+                </td>
+                <td>
+                    <input type="button" value="Сохранить" (click)="save()" class="btn btn-sm btn-success" />
+                    <input type="button" value="Отмена" (click)="cansel()" class="btn btn-sm btn-warning" />
+                </td>
+            
+        </ng-template>
+
+        <!--шаблон для добавления-->
+        <ng-template #create>
+            <div class="form-group">
+                <label>Компания</label>
+                <input type="text" [(ngModel)]="phone.company" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Название</label>
+                <input type="text" [(ngModel)]="phone.name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Цена</label>
+                <input type="text" [(ngModel)]="phone.price" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Год выпуска</label>
+                <input type="text" [(ngModel)]="phone.yearRelease" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Цвет</label>
+                <label class="container" *ngFor="let col of characts">
+                    <input type="checkbox" data-md-icheck (change)="toggleVisibilityColors(col)" />{{col.color}}
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Объем памяти</label>
+                <select [(ngModel)]="phone.valueMemory" class="form-control">
+                    <option *ngFor="let mam of characts" [ngValue]="mam.mamory">{{mam.mamory}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Камера</label>
+                <input type="text" [(ngModel)]="phone.cameraPx" class="form-control" />
+            </div>
+            <div>
+                <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+                <input type="button" value="Отмена" (click)="cansel()" class="btn btn-warning" />
+            </div>
+        </ng-template>
+    </div>
+</div>
+
+

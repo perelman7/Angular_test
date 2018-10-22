@@ -1,0 +1,43 @@
+﻿<div>Download the report</div>
+<button (click)="exportAsXLSX()">DownLoad</button>
+
+<div>
+    <div>
+        <table class="table table-bordered" id="resultReport">
+            <thead>
+                <tr>
+                    <td>Название</td>
+                    <td>Количество</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Общее количество пользователей</td>
+                    <td>{{users.length}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Общее количество телефонов</td>
+                    <td>{{phones.length}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>средняя цена на телефоны</td>
+                    <td>{{middlePrice}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>средний возраст пользователей</td>
+                    <td>{{middleAge}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Количество компаний</td>
+                    <td>{{valueCompany}}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
